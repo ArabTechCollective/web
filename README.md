@@ -1,2 +1,2 @@
 # web
-Backend for the website 
+Backend for the website, serverless
