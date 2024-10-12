@@ -7,7 +7,7 @@ env:
 on:
   push:
     branches:
-      - main # Change this to your desired branch
+      - change_folder_to_aws_lambda # Change this to your desired branch
 
 jobs:
   deploy:
@@ -43,14 +43,6 @@ jobs:
 
       - name: Deploy Lambda Function
         run: |
-          aws lambda create-function \
-            --function-name home \
-            --runtime nodejs20.x \ 
-            --role arn:aws:iam::022499005689:user/web \  
-            --handler index.handler \ 
-            --zip-file fileb://path/to/your/lambda.zip \  
+           aws lambda create-function --function-name home --runtime nodejs20.x --role arn:aws:iam::022499005689:user/web --handler index.handler --zip-file fileb://deploy.zip
 
-          # Optionally update the Lambda function if it already exists
-          aws lambda update-function-code \
-            --function-name home \
-            --zip-file fileb://path/to/your/lambda.zip
+        # aws lambda update-function-code --function-name home --zip-file fileb://path/to/your/lambda.zip
