@@ -43,6 +43,6 @@ jobs:
 
       - name: Deploy Lambda Function
         run: |
-           aws lambda create-function --function-name home --runtime nodejs20.x --role arn:aws:iam::022499005689:user/web --handler index.handler --zip-file fileb://deploy.zip
+           aws lambda create-function --function-name home --runtime nodejs20.x --role arn:aws:iam::022499005689:role/web --handler index.handler --zip-file fileb://deploy.zip
 
         # aws lambda update-function-code --function-name home --zip-file fileb://path/to/your/lambda.zip
