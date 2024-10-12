@@ -48,4 +48,3 @@ export const getMentors = async (
   }
 };
 
-exports.handler = getMentors;
