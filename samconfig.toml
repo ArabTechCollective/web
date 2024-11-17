@@ -3,7 +3,7 @@
 version = 0.1
 
 [default.global.parameters]
-stack_name = "atc-web-2"
+stack_name = "atc-web-3"
 
 [default.build.parameters]
 cached = true
