@@ -27,7 +27,7 @@ jobs:
       - name: Sam Build
         run: sam build
       - name: Sam Deploy
-        run: sam deploy
+        run: sam deploy --no-confirm-changeset
       #   - name: Create DynamoDB Table
       #     run: |
       #       aws dynamodb create-table \
