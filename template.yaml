@@ -47,6 +47,17 @@ Resources:
         Sourcemap: true
         EntryPoints:
           - index.ts
+  Mentor:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Mentor
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group

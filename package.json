@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "dynamoose": "^4.0.2"
+  }
+}
