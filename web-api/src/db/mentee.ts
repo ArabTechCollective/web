@@ -1,4 +1,5 @@
 import { Schema } from "dynamoose"
+import { Item } from "dynamoose/dist/Item";
 
 enum ServicesOffered {
     COACHING_SESSION = 'coaching_session',
@@ -14,7 +15,7 @@ enum Groups {
     EMAIL = 'email',
 }
 
-const mentee = new Schema({
+export const mentee = new Schema({
     id: {
         type: String,
     },
@@ -40,6 +41,7 @@ const mentee = new Schema({
     location: {
         type: String,
     },
+    // will need sanitization
     interested_role: {
         type: String,
     },
@@ -72,10 +74,12 @@ const mentee = new Schema({
         type: String,
         default: null,
     },
+    // will need sanitization
     former_role: {
         type: String,
         default: null,
     },
+    // will need sanitizatoin
     current_role: {
         type: String,
         default: null,
@@ -94,4 +98,44 @@ const mentee = new Schema({
         type: [Groups],
         default: null,
     }
+}, {
+    timestamps: {
+        createdAt: ["createDate", "creation"],
+        updatedAt: ["updateDate", "updated"]
+    }
 });
+
+class Mentee extends Item {
+    id!: String;
+    // will need sanitization
+    phone: number | undefined;
+    first_name!: string;
+    last_name!: string;
+    // will need sanitization
+    email_address!: string;
+    support_description!: String;
+    // will need sanitization
+    location!: String;
+    // will need sanitization
+    interested_role!: String;
+    submitted_at!: Date;
+    biography!: String;
+    misc!: String;
+    connection_to_arab!: String;
+    // will need sanitization
+    companies!: [String];
+    interested_services!: [ServicesOffered];
+    // will need sanitization
+    former_job: String | undefined;
+    // will need sanitization
+    current_job: String | undefined;
+    // will need sanitization
+    former_role: String | undefined;
+    // will need sanitizatoin
+    current_role: String | undefined;
+    // will need sanitization
+    linkedin_url: String | undefined;
+    // will need sanitization
+    resume_link: String | undefined;
+    groups!: [Groups]
+}
