@@ -1,6 +1,5 @@
 name: Deploy Lambda and DynamoDB
 
-
 on:
   push:
     branches:
@@ -22,6 +21,7 @@ jobs:
           aws-region: us-east-1 # Change to your region
       - name: Build
         run: npm run build
-
-      - name: 'Deploy Lambda'
+      - name: Install
+        run: npm install
+      - name: "Deploy Lambda"
         run: npx cdk deploy --require-approval never
