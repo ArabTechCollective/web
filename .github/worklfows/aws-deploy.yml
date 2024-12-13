@@ -1,9 +1,8 @@
 name: Deploy Lambda and DynamoDB
 
 on:
-  push:
-    branches:
-      - add_build_step
+  whatever:
+
 
 jobs:
   deploy:
