@@ -1,12 +1,8 @@
 name: Deploy Lambda and DynamoDB
 
-env:
-  AWS_DDB_MENTOR_TABLE_NAME: atc-mentor
-
 on:
-  push:
-    branches:
-      - main
+  whatever:
+
 
 jobs:
   deploy:
@@ -24,6 +20,6 @@ jobs:
           aws-region: us-east-1 # Change to your region
       - name: Build
         run: npm run build
-        
+
       - name: 'Deploy Lambda'
         run: npx cdk deploy --require-approval never
