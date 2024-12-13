@@ -6,7 +6,7 @@ env:
 on:
   push:
     branches:
-      - main
+      - add_build_step
 
 jobs:
   deploy:
@@ -24,6 +24,6 @@ jobs:
           aws-region: us-east-1 # Change to your region
       - name: Build
         run: npm run build
-        
+
       - name: 'Deploy Lambda'
         run: npx cdk deploy --require-approval never
