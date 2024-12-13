@@ -1,8 +1,5 @@
 name: Deploy Lambda and DynamoDB
 
-env:
-  AWS_DDB_MENTOR_TABLE_NAME: atc-mentor
-
 on:
   push:
     branches:
