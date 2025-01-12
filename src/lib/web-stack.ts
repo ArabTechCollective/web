@@ -18,7 +18,7 @@ export class WebStack extends Stack {
     // });
     const createMentor = new Function(this, 'createMentor', {
       runtime: Runtime.NODEJS_22_X,
-      code: Code.fromAsset(join(__dirname, '../dist')),
+      code: Code.fromAsset(join(__dirname, '../dist/functions')),
       handler: 'createMentor.createMentor'
     });
 

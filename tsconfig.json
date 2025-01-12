@@ -6,7 +6,7 @@
       "es2020",
       "dom"
     ],
-    "rootDir": "functions",
+    "rootDir": "src/",
     "outDir": "dist",
     "declaration": true,
     "strict": true,
@@ -31,6 +31,6 @@
     "cdk.out"
   ],
   "include": [
-    "functions/**/*"
+    "src/**/*"
   ],
 }
