@@ -2,7 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { MentorModel } from '../db/mentor.schema';
 import { Groups, ServicesOffered } from '../db/properties.pattern';
 import { randomUUID } from 'crypto';
-
+console.log('asdfasdf');
 export const createMentor = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
     const exampleId = randomUUID();
@@ -39,7 +39,7 @@ export const createMentor = async (event: APIGatewayProxyEvent): Promise<APIGate
     return {
       statusCode: 500,
       body: JSON.stringify({
-        message: 'Internal Server Error',
+        message: `Internal Server Error: ${error}`,
         error: (error as Error).message,
       }),
     };

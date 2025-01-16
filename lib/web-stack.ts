@@ -3,8 +3,9 @@ import { Construct } from 'constructs';
 import { Function, Runtime, Code, FunctionUrlAuthType } from 'aws-cdk-lib/aws-lambda';
 import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { join } from 'path';
-import { createMentor } from '../functions/createMentor';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { TableV2 } from 'aws-cdk-lib/aws-dynamodb';
+const pathToRoot = join(__dirname, '../dist');
+const pathToHandler = 'functions';
 
 export class WebStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -16,10 +17,11 @@ export class WebStack extends Stack {
     // const queue = new sqs.Queue(this, 'WebQueue', {
     //   visibilityTimeout: cdk.Duration.seconds(300)
     // });
+
     const createMentor = new Function(this, 'createMentor', {
       runtime: Runtime.NODEJS_22_X,
-      code: Code.fromAsset(join(__dirname, '../dist/functions')),
-      handler: 'createMentor.createMentor'
+      code: Code.fromAsset(pathToRoot),
+      handler: `${pathToHandler}/createMentor.createMentor`
     });
 
     // const createMentorFunctionUrl = createMentor.addFunctionUrl({

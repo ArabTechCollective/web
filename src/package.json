@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "web-functions",
   "version": "0.1.0",
   "bin": {
     "web": "bin/web.ts"
