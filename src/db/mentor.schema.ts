@@ -40,7 +40,8 @@ const mentorSchemaObj = {
             required: true,
         },
         interested_services: {
-            type: [String],
+            type: Array,
+            schema: [String],
             required: true,
         },
         former_company: {
@@ -66,7 +67,7 @@ const mentorSchemaObj = {
     }
 };
 
-const mentorSchema = new Schema(mentorSchemaObj, {timestamps:  true});
+const mentorSchema = new Schema(mentorSchemaObj, { timestamps: true });
 
 export const MentorModel = model<Mentor>('Mentor', mentorSchema);
 

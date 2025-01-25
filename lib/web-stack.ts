@@ -1,9 +1,10 @@
 import { Stack, StackProps, CfnOutput } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { Function, Runtime, Code, FunctionUrlAuthType } from 'aws-cdk-lib/aws-lambda';
+import { Function, Runtime, Code, FunctionUrlAuthType, Architecture } from 'aws-cdk-lib/aws-lambda';
 import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { join } from 'path';
 import { TableV2 } from 'aws-cdk-lib/aws-dynamodb';
+import { Effect, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 const pathToRoot = join(__dirname, '../dist');
 const pathToHandler = 'functions';
 
@@ -18,10 +19,34 @@ export class WebStack extends Stack {
     //   visibilityTimeout: cdk.Duration.seconds(300)
     // });
 
+    const role = new Role(this, 'DynamoDbRole', {
+      assumedBy: new ServicePrincipal('lambda.amazonaws.com')
+    });
+
+    role.addToPolicy(new PolicyStatement({
+      actions: ['dynamodb:CreateTable', 'dynamodb:GetItem', 'dynamodb:PutItem',
+        'dynamodb:UpdateItem', 'dynamodb:DeleteItem', 'dynamodb:UpdateTable', "dynamodb:ListTables",
+        "dynamodb:DescribeTable",
+        "dynamodb:DescribeContributorInsights",
+        "dynamodb:DescribeTimeToLive"],
+      resources: ['*'],
+      effect: Effect.ALLOW,
+    }));
+
+    role.addToPolicy(new PolicyStatement({
+      actions: ["logs:CreateLogStream",
+        "logs:PutLogEvents", 'logs:CreateLogGroup'],
+      resources: ['*'],
+      effect: Effect.ALLOW,
+    }));
+
+
     const createMentor = new Function(this, 'createMentor', {
       runtime: Runtime.NODEJS_22_X,
+      architecture: Architecture.ARM_64,
       code: Code.fromAsset(pathToRoot),
-      handler: `${pathToHandler}/createMentor.createMentor`
+      handler: `${pathToHandler}/createMentor.createMentor`,
+      role: role,
     });
 
     // const createMentorFunctionUrl = createMentor.addFunctionUrl({

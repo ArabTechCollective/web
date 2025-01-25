@@ -42,7 +42,8 @@ const menteeSchemaObj = {
             required: true,
         },
         interested_services: {
-            type: [String],
+            type: Array,
+            schema: [String],
             required: true,
         },
         former_company: {

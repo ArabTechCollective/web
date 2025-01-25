@@ -55,7 +55,8 @@ export const memberSchema = {
         required: true,
     },
     groups: {
-        type: [String],
+        type: Array,
+        schema: [String],
         required: true,
     },
 };

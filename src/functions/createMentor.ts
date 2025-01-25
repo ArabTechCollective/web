@@ -2,7 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { MentorModel } from '../db/mentor.schema';
 import { Groups, ServicesOffered } from '../db/properties.pattern';
 import { randomUUID } from 'crypto';
-console.log('asdfasdf');
+
 export const createMentor = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
     const exampleId = randomUUID();
@@ -28,8 +28,20 @@ export const createMentor = async (event: APIGatewayProxyEvent): Promise<APIGate
       former_role: 'Software Engineer',
       linkedin_url: 'linkedin.com/daniel-jomaa'
     };
-    MentorModel.create(mentor);
-    console.log('Mentor created successfully', exampleId);
+    try {
+      const createdMentor = await MentorModel.create(mentor);
+      console.log('Mentor created successfully', createdMentor.id);
+    } catch (error) {
+      console.error('Error creating mentor:', error);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          message: `Internal Server Error: ${error}`,
+          error: (error as Error).message,
+        }),
+      };
+    }
+
     return {
       statusCode: 200,
       body: JSON.stringify(`'Mentor created successfully', ${exampleId}`),
