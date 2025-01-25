@@ -24,6 +24,6 @@ jobs:
       - name: Build
         run: npm run build
       - name: Prepare Dependencies
-        run: cp node_modules dist
+        run: cp -r node_modules dist
       - name: 'Deploy Lambda'
         run: npx cdk deploy --require-approval never
