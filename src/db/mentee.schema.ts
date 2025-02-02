@@ -2,20 +2,22 @@ import { Member, memberSchema } from "./member.pattern";
 import { model, Schema, } from "dynamoose";
 import { Groups, ServicesOffered } from "./properties.pattern";
 import { randomUUID } from "crypto";
+import { components } from '../schema/schema';
 
-export class Mentee extends Member {
+type MenteeInterface = components['schemas']['Mentee']
+
+export class Mentee extends Member implements MenteeInterface {
     support_description: string;
     interested_role: string;
     biography: string;
-    misc: string;
     interested_companies: string;
-    interested_services: ServicesOffered[];
-    former_company: string | undefined;
-    current_company: string | undefined;
-    former_role: string | undefined;
-    current_role: string | undefined;
-    linkedin_url: string | undefined;
-    resume_link: string | undefined;
+    interested_services: ("coaching_session" | "make_connections" | "job_referral" | "interview_prep" | "resume_review")[];
+    former_company?: string | undefined;
+    current_company?: string | undefined;
+    former_role?: string | undefined;
+    current_role?: string | undefined;
+    linkedin_url?: string | undefined;
+    resume_link?: string | undefined;
 }
 
 
