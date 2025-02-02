@@ -2,20 +2,24 @@ import { model, Schema } from "dynamoose";
 import { Member, memberSchema } from "./member.pattern";
 import { Groups, ServicesOffered } from "./properties.pattern";
 import { randomUUID } from "crypto";
+import { components } from '../schema/schema'
+import { Item } from "dynamoose/dist/Item";
 
-export class Mentor extends Member {
+// type Mentor = components['schemas']['Mentor'];
+type MentorInterface = components['schemas']['Mentor'];
+
+class Mentor extends Member implements MentorInterface {
     support_description: string;
     interested_role: string;
     biography: string;
-    misc: string;
     interested_companies: string;
     interested_services: ServicesOffered[];
-    former_company: string | undefined;
-    current_company: string | undefined;
-    former_role: string | undefined;
-    current_role: string | undefined;
-    linkedin_url: string | undefined;
-}
+    former_company?: string | undefined;
+    current_company?: string | undefined;
+    former_role?: string | undefined;
+    current_role?: string | undefined;
+    linkedin_url?: string | undefined;
+};
 
 const mentorSchemaObj = {
     ...memberSchema, ...{
