@@ -4,7 +4,10 @@ import { Function, Runtime, Code, FunctionUrlAuthType, Architecture } from 'aws-
 import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { join } from 'path';
 import { TableV2 } from 'aws-cdk-lib/aws-dynamodb';
+import { OpenApiGatewayToLambda } from '@aws-solutions-constructs/aws-openapigateway-lambda';
 import { Effect, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
+import { Asset } from 'aws-cdk-lib/aws-s3-assets';
+
 const pathToRoot = join(__dirname, '../dist');
 const pathToHandler = 'functions';
 
@@ -49,6 +52,23 @@ export class WebStack extends Stack {
       role: role,
     });
 
+    const openapi = new OpenApiGatewayToLambda(this, 'OpenApiGatewayToLambda', {
+      // The OpenAPI is stored as an S3 asset where it can be accessed during the
+      // CloudFormation Create Stack command
+      apiDefinitionAsset: new Asset(this, 'ApiDefinitionAsset', {
+        path: join('src', 'schema', 'openapi.json')
+      }),
+      // The construct uses these records to integrate the methods in the OpenAPI spec
+      // to Lambda functions in the CDK stack
+      apiIntegrations: [
+        {
+          // These ids correspond to the placeholder values for uri in the OpenAPI spec
+          id: 'CreateMentor',
+          existingLambdaObj: createMentor
+        }
+      ]
+    });
+
     // const createMentorFunctionUrl = createMentor.addFunctionUrl({
     //   authType: FunctionUrlAuthType.NONE,
     // });
@@ -60,6 +80,9 @@ export class WebStack extends Stack {
 
     new CfnOutput(this, "createMentorFunctionUrlOutput", {
       value: api.url,
-    })
+    });
+    new CfnOutput(this, 'CreateMentorUrlApiGateway', {
+      value: openapi.apiGateway.url,
+    });
   }
 }

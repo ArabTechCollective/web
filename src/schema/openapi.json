@@ -1,0 +1,229 @@
+{
+	"openapi": "3.0.3",
+	"info": {
+		"title": "WebStack API Gateway",
+		"version": "1.0",
+		"description": "defines an API methods for atc-web resources"
+	},
+	"x-amazon-apigateway-request-validators": {
+		"all": {
+			"validateRequestBody": true,
+			"validateRequestParameters": true
+		},
+		"params-only": {
+			"validateRequestBody": false,
+			"validateRequestParameters": true
+		}
+	},
+	"x-amazon-apigateway-request-validator": "params-only",
+	"paths": {
+		"/createMentor": {
+			"post": {
+				"x-amazon-apigateway-auth": {
+					"type": "NONE"
+				},
+				"x-amazon-apigateway-request-validator": "all",
+				"summary": "Create a mentor",
+				"x-amazon-apigateway-integration": {
+					"httpMethod": "POST",
+					"uri": "CreateMentor",
+					"passthroughBehavior": "when_no_match",
+					"type": "aws_proxy"
+				},
+				"requestBody": {
+					"description": "Mentor Schema",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Mentor"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Mentor"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Member": {
+				"required": [
+					"id",
+					"phone",
+					"first_name",
+					"last_name",
+					"email",
+					"city",
+					"state",
+					"connection_to_arab",
+					"groups"
+				],
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string",
+						"format": "email"
+					},
+					"city": {
+						"type": "string"
+					},
+					"state": {
+						"type": "string"
+					},
+					"connection_to_arab": {
+						"type": "string"
+					},
+					"groups": {
+						"type": "array",
+						"items": {
+							"enum": ["linkedin", "slack", "email"]
+						}
+					},
+					"misc": {
+						"type": "string"
+					}
+				}
+			},
+			"Mentor": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Member"
+					}
+				],
+				"required": [
+					"id",
+					"phone",
+					"support_description",
+					"interested_role",
+					"biography",
+					"interested_companies",
+					"interested_services"
+				],
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"support_description": {
+						"type": "string"
+					},
+					"interested_role": {
+						"type": "string"
+					},
+					"biography": {
+						"type": "string"
+					},
+					"interested_companies": {
+						"type": "string"
+					},
+					"interested_services": {
+						"type": "array",
+						"items": {
+							"enum": ["linkedin", "slack", "email"]
+						}
+					},
+					"former_company": {
+						"type": "string"
+					},
+					"current_company": {
+						"type": "string"
+					},
+					"former_role": {
+						"type": "string"
+					},
+					"current_role": {
+						"type": "string"
+					},
+					"linkedin_url": {
+						"type": "string"
+					}
+				}
+			},
+			"Mentee": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Member"
+					}
+				],
+				"required": [
+					"support_description",
+					"interested_role",
+					"biography",
+					"interested_companies",
+					"interested_services"
+				],
+				"properties": {
+					"support_description": {
+						"type": "string"
+					},
+					"interested_role": {
+						"type": "string"
+					},
+					"biography": {
+						"type": "string"
+					},
+					"interested_companies": {
+						"type": "string"
+					},
+					"interested_services": {
+						"type": "array",
+						"items": {
+							"enum": [
+								"coaching_session",
+								"make_connections",
+								"job_referral",
+								"interview_prep",
+								"resume_review"
+							]
+						}
+					},
+					"former_company": {
+						"type": "string"
+					},
+					"current_company": {
+						"type": "string"
+					},
+					"former_role": {
+						"type": "string"
+					},
+					"current_role": {
+						"type": "string"
+					},
+					"linkedin_url": {
+						"type": "string"
+					},
+					"resume_link": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	}
+}
