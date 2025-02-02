@@ -109,6 +109,11 @@
 				}
 			},
 			"Mentor": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Member"
+					}
+				],
 				"required": [
 					"id",
 					"phone",
@@ -162,6 +167,11 @@
 				}
 			},
 			"Mentee": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Member"
+					}
+				],
 				"required": [
 					"support_description",
 					"interested_role",
